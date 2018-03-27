@@ -16,3 +16,21 @@ Configure miss: cap-ng.h presence
 Configure miss: cap-ng.h
 Configure miss: sphinx-build
 Configure miss: lcov
+Configure miss: wget
+Configure miss: ws2tcpip.h
+Configure miss: w32api/wtypes.h
+Configure miss: w32api/winbase.h
+Configure miss: wincrypt.h
+Configure miss: spatch
+Configure miss: Mpipe
+Configure miss: LIBPCREVERSION
+Configure miss: jansson.h usability
+Configure miss: jansson.h presence
+Configure miss: jansson.h
+Configure miss: libnet.h version 1.1.x
+Configure miss: libiconv_close in -liconv
+Configure miss: cap-ng.h usability
+Configure miss: cap-ng.h presence
+Configure miss: cap-ng.h
+Configure miss: sphinx-build
+Configure miss: lcov

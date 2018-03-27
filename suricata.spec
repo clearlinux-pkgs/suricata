@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.0.4
-Release  : 1
+Release  : 2
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz.sig
@@ -95,16 +95,27 @@ python3 components for the suricata package.
 
 %prep
 %setup -q -n suricata-4.0.4
+pushd ..
+cp -a suricata-4.0.4 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522182207
+export SOURCE_DATE_EPOCH=1522182494
 %configure --disable-static
 make  %{?_smp_mflags}
 
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+export CFLAGS="$CFLAGS -m64 -march=haswell"
+export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
+export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+%configure --disable-static    --libdir=/usr/lib64/haswell --bindir=/usr/bin/haswell
+make  %{?_smp_mflags}
+popd
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
@@ -113,8 +124,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1522182207
+export SOURCE_DATE_EPOCH=1522182494
 rm -rf %{buildroot}
+pushd ../buildavx2/
+%make_install
+popd
 %make_install
 
 %files
@@ -122,6 +136,7 @@ rm -rf %{buildroot}
 
 %files bin
 %defattr(-,root,root,-)
+/usr/bin/haswell/suricata
 /usr/bin/suricata
 /usr/bin/suricatasc
 
@@ -143,6 +158,7 @@ rm -rf %{buildroot}
 /usr/include/htp/htp_urlencoded.h
 /usr/include/htp/htp_utf8_decoder.h
 /usr/include/htp/htp_version.h
+/usr/lib64/haswell/libhtp.so
 /usr/lib64/libhtp.so
 /usr/lib64/pkgconfig/htp.pc
 
@@ -153,6 +169,8 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/haswell/libhtp.so.2
+/usr/lib64/haswell/libhtp.so.2.0.0
 /usr/lib64/libhtp.so.2
 /usr/lib64/libhtp.so.2.0.0
 
