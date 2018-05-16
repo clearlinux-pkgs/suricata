@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.0.4
-Release  : 4
+Release  : 5
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz.sig
@@ -15,6 +15,7 @@ Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause GPL-2.0 LGPL-2.1 MIT
 Requires: suricata-bin
 Requires: suricata-python3
+Requires: suricata-config
 Requires: suricata-lib
 Requires: suricata-doc
 Requires: suricata-python
@@ -43,9 +44,18 @@ BuildRequires : yaml-dev
 %package bin
 Summary: bin components for the suricata package.
 Group: Binaries
+Requires: suricata-config
 
 %description bin
 bin components for the suricata package.
+
+
+%package config
+Summary: config components for the suricata package.
+Group: Default
+
+%description config
+config components for the suricata package.
 
 
 %package dev
@@ -104,11 +114,10 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1522182494
+export SOURCE_DATE_EPOCH=1526505957
 %configure --disable-static
 make  %{?_smp_mflags}
 
-unset PKG_CONFIG_PATH
 pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
@@ -124,12 +133,15 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1522182494
+export SOURCE_DATE_EPOCH=1526505957
 rm -rf %{buildroot}
 pushd ../buildavx2/
 %make_install
 popd
 %make_install
+## make_install_append content
+install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suricata.service
+## make_install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -139,6 +151,10 @@ popd
 /usr/bin/haswell/suricata
 /usr/bin/suricata
 /usr/bin/suricatasc
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/systemd/system/suricata.service
 
 %files dev
 %defattr(-,root,root,-)

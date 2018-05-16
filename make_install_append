@@ -1,0 +1,1 @@
+install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suricata.service
