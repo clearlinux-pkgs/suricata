@@ -33,7 +33,7 @@ BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(nspr)
 BuildRequires : pkgconfig(nss)
 BuildRequires : pkgconfig(zlib)
-BuildRequires : python-dev
+
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : yaml-dev
