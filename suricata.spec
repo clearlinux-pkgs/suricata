@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.0.4
-Release  : 10
+Release  : 11
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz.sig
@@ -17,7 +17,8 @@ Requires: suricata-bin
 Requires: suricata-python3
 Requires: suricata-config
 Requires: suricata-lib
-Requires: suricata-doc
+Requires: suricata-license
+Requires: suricata-man
 Requires: suricata-python
 BuildRequires : curl-dev
 BuildRequires : doxygen
@@ -33,7 +34,6 @@ BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(nspr)
 BuildRequires : pkgconfig(nss)
 BuildRequires : pkgconfig(zlib)
-
 BuildRequires : python3-dev
 BuildRequires : setuptools
 BuildRequires : yaml-dev
@@ -45,6 +45,8 @@ BuildRequires : yaml-dev
 Summary: bin components for the suricata package.
 Group: Binaries
 Requires: suricata-config
+Requires: suricata-license
+Requires: suricata-man
 
 %description bin
 bin components for the suricata package.
@@ -72,6 +74,7 @@ dev components for the suricata package.
 %package doc
 Summary: doc components for the suricata package.
 Group: Documentation
+Requires: suricata-man
 
 %description doc
 doc components for the suricata package.
@@ -80,9 +83,26 @@ doc components for the suricata package.
 %package lib
 Summary: lib components for the suricata package.
 Group: Libraries
+Requires: suricata-license
 
 %description lib
 lib components for the suricata package.
+
+
+%package license
+Summary: license components for the suricata package.
+Group: Default
+
+%description license
+license components for the suricata package.
+
+
+%package man
+Summary: man components for the suricata package.
+Group: Default
+
+%description man
+man components for the suricata package.
 
 
 %package python
@@ -114,15 +134,16 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526505957
+export SOURCE_DATE_EPOCH=1531153418
 %configure --disable-static
 make  %{?_smp_mflags}
 
+unset PKG_CONFIG_PATH
 pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
-%configure --disable-static    --libdir=/usr/lib64/haswell --bindir=/usr/bin/haswell
+%configure --disable-static    --libdir=/usr/lib64/haswell
 make  %{?_smp_mflags}
 popd
 %check
@@ -133,8 +154,25 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1526505957
+export SOURCE_DATE_EPOCH=1531153418
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/suricata
+cp COPYING %{buildroot}/usr/share/doc/suricata/COPYING
+cp LICENSE %{buildroot}/usr/share/doc/suricata/LICENSE
+cp libhtp/LICENSE %{buildroot}/usr/share/doc/suricata/libhtp_LICENSE
+cp contrib/file_processor/LICENSE %{buildroot}/usr/share/doc/suricata/contrib_file_processor_LICENSE
+cp contrib/tile_pcie_logd/LICENSE %{buildroot}/usr/share/doc/suricata/contrib_tile_pcie_logd_LICENSE
+cp rust/vendor/enum_primitive/LICENSE %{buildroot}/usr/share/doc/suricata/rust_vendor_enum_primitive_LICENSE
+cp rust/vendor/num-traits/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-MIT
+cp rust/vendor/num-traits/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-APACHE
+cp rust/vendor/num-traits-0.1.43/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-MIT
+cp rust/vendor/num-traits-0.1.43/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-APACHE
+cp rust/vendor/lazy_static/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-MIT
+cp rust/vendor/lazy_static/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-APACHE
+cp rust/vendor/libc/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_libc_LICENSE-MIT
+cp rust/vendor/libc/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_libc_LICENSE-APACHE
+cp rust/vendor/ntp-parser/COPYING %{buildroot}/usr/share/doc/suricata/rust_vendor_ntp-parser_COPYING
+cp rust/vendor/nom/LICENSE %{buildroot}/usr/share/doc/suricata/rust_vendor_nom_LICENSE
 pushd ../buildavx2/
 %make_install
 popd
@@ -148,7 +186,6 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/haswell/suricata
 /usr/bin/suricata
 /usr/bin/suricatasc
 
@@ -179,9 +216,8 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/lib64/pkgconfig/htp.pc
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/doc/suricata/*
-%doc /usr/share/man/man1/*
 
 %files lib
 %defattr(-,root,root,-)
@@ -189,6 +225,29 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/lib64/haswell/libhtp.so.2.0.0
 /usr/lib64/libhtp.so.2
 /usr/lib64/libhtp.so.2.0.0
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/suricata/COPYING
+/usr/share/doc/suricata/LICENSE
+/usr/share/doc/suricata/contrib_file_processor_LICENSE
+/usr/share/doc/suricata/contrib_tile_pcie_logd_LICENSE
+/usr/share/doc/suricata/libhtp_LICENSE
+/usr/share/doc/suricata/rust_vendor_enum_primitive_LICENSE
+/usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-APACHE
+/usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-MIT
+/usr/share/doc/suricata/rust_vendor_libc_LICENSE-APACHE
+/usr/share/doc/suricata/rust_vendor_libc_LICENSE-MIT
+/usr/share/doc/suricata/rust_vendor_nom_LICENSE
+/usr/share/doc/suricata/rust_vendor_ntp-parser_COPYING
+/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-APACHE
+/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-MIT
+/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-APACHE
+/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-MIT
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man1/suricata.1
 
 %files python
 %defattr(-,root,root,-)
