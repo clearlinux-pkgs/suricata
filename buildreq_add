@@ -3,3 +3,6 @@
 hyperscan-dev
 yaml-dev
 curl-dev
+jansson-dev
+libcap-ng-dev
+Sphinx

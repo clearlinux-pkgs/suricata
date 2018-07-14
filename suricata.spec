@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.0.4
-Release  : 12
+Release  : 13
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz.sig
@@ -20,9 +20,12 @@ Requires: suricata-lib
 Requires: suricata-license
 Requires: suricata-man
 Requires: suricata-python
+BuildRequires : Sphinx
 BuildRequires : curl-dev
 BuildRequires : doxygen
 BuildRequires : hyperscan-dev
+BuildRequires : jansson-dev
+BuildRequires : libcap-ng-dev
 BuildRequires : libpcap-dev
 BuildRequires : pbr
 BuildRequires : pip
@@ -134,7 +137,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531153418
+export SOURCE_DATE_EPOCH=1531533434
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -154,7 +157,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1531153418
+export SOURCE_DATE_EPOCH=1531533434
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/suricata
 cp COPYING %{buildroot}/usr/share/doc/suricata/COPYING
