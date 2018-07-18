@@ -5,14 +5,14 @@
 # Source0 file verified with key 0xF7F9B0A300C1B70D (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 4.0.4
-Release  : 13
-URL      : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz
-Source99 : https://www.openinfosecfoundation.org/download/suricata-4.0.4.tar.gz.sig
+Version  : 4.0.5
+Release  : 14
+URL      : https://www.openinfosecfoundation.org/download/suricata-4.0.5.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-4.0.5.tar.gz
+Source99 : https://www.openinfosecfoundation.org/download/suricata-4.0.5.tar.gz.sig
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
-License  : Apache-2.0 BSD-3-Clause GPL-2.0 LGPL-2.1 MIT
+License  : Apache-2.0 BSD-3-Clause GPL-2.0 MIT
 Requires: suricata-bin
 Requires: suricata-python3
 Requires: suricata-config
@@ -21,6 +21,7 @@ Requires: suricata-license
 Requires: suricata-man
 Requires: suricata-python
 BuildRequires : Sphinx
+BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
 BuildRequires : doxygen
 BuildRequires : hyperscan-dev
@@ -127,9 +128,9 @@ python3 components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-4.0.4
+%setup -q -n suricata-4.0.5
 pushd ..
-cp -a suricata-4.0.4 buildavx2
+cp -a suricata-4.0.5 buildavx2
 popd
 
 %build
@@ -137,7 +138,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1531533434
+export SOURCE_DATE_EPOCH=1531919923
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -146,7 +147,7 @@ pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
-%configure --disable-static    --libdir=/usr/lib64/haswell
+%configure --disable-static
 make  %{?_smp_mflags}
 popd
 %check
@@ -157,7 +158,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1531533434
+export SOURCE_DATE_EPOCH=1531919923
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/doc/suricata
 cp COPYING %{buildroot}/usr/share/doc/suricata/COPYING
@@ -165,19 +166,14 @@ cp LICENSE %{buildroot}/usr/share/doc/suricata/LICENSE
 cp libhtp/LICENSE %{buildroot}/usr/share/doc/suricata/libhtp_LICENSE
 cp contrib/file_processor/LICENSE %{buildroot}/usr/share/doc/suricata/contrib_file_processor_LICENSE
 cp contrib/tile_pcie_logd/LICENSE %{buildroot}/usr/share/doc/suricata/contrib_tile_pcie_logd_LICENSE
-cp rust/vendor/enum_primitive/LICENSE %{buildroot}/usr/share/doc/suricata/rust_vendor_enum_primitive_LICENSE
-cp rust/vendor/num-traits/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-MIT
-cp rust/vendor/num-traits/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-APACHE
-cp rust/vendor/num-traits-0.1.43/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-MIT
-cp rust/vendor/num-traits-0.1.43/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-APACHE
 cp rust/vendor/lazy_static/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-MIT
 cp rust/vendor/lazy_static/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-APACHE
 cp rust/vendor/libc/LICENSE-MIT %{buildroot}/usr/share/doc/suricata/rust_vendor_libc_LICENSE-MIT
 cp rust/vendor/libc/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_libc_LICENSE-APACHE
-cp rust/vendor/ntp-parser/COPYING %{buildroot}/usr/share/doc/suricata/rust_vendor_ntp-parser_COPYING
+cp rust/vendor/ntp-parser/LICENSE-APACHE %{buildroot}/usr/share/doc/suricata/rust_vendor_ntp-parser_LICENSE-APACHE
 cp rust/vendor/nom/LICENSE %{buildroot}/usr/share/doc/suricata/rust_vendor_nom_LICENSE
 pushd ../buildavx2/
-%make_install
+%make_install_avx2
 popd
 %make_install
 ## make_install_append content
@@ -189,6 +185,7 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 
 %files bin
 %defattr(-,root,root,-)
+/usr/bin/haswell/suricata
 /usr/bin/suricata
 /usr/bin/suricatasc
 
@@ -236,17 +233,12 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/share/doc/suricata/contrib_file_processor_LICENSE
 /usr/share/doc/suricata/contrib_tile_pcie_logd_LICENSE
 /usr/share/doc/suricata/libhtp_LICENSE
-/usr/share/doc/suricata/rust_vendor_enum_primitive_LICENSE
 /usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-APACHE
 /usr/share/doc/suricata/rust_vendor_lazy_static_LICENSE-MIT
 /usr/share/doc/suricata/rust_vendor_libc_LICENSE-APACHE
 /usr/share/doc/suricata/rust_vendor_libc_LICENSE-MIT
 /usr/share/doc/suricata/rust_vendor_nom_LICENSE
-/usr/share/doc/suricata/rust_vendor_ntp-parser_COPYING
-/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-APACHE
-/usr/share/doc/suricata/rust_vendor_num-traits-0.1.43_LICENSE-MIT
-/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-APACHE
-/usr/share/doc/suricata/rust_vendor_num-traits_LICENSE-MIT
+/usr/share/doc/suricata/rust_vendor_ntp-parser_LICENSE-APACHE
 
 %files man
 %defattr(-,root,root,-)
