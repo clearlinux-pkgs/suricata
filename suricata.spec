@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.1.0
-Release  : 15
+Release  : 16
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.1.0.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.1.0.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.1.0.tar.gz.sig
@@ -34,6 +34,7 @@ BuildRequires : hyperscan-dev
 BuildRequires : jansson-dev
 BuildRequires : libcap-ng-dev
 BuildRequires : libpcap-dev
+BuildRequires : lz4-dev
 BuildRequires : pkgconfig(libhs)
 BuildRequires : pkgconfig(libnetfilter_queue)
 BuildRequires : pkgconfig(libpcre)
@@ -42,6 +43,7 @@ BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(nspr)
 BuildRequires : pkgconfig(nss)
 BuildRequires : pkgconfig(zlib)
+BuildRequires : rustc
 BuildRequires : xz-dev
 BuildRequires : yaml-dev
 
@@ -152,7 +154,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1541512138
+export SOURCE_DATE_EPOCH=1541512878
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -174,7 +176,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1541512138
+export SOURCE_DATE_EPOCH=1541512878
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp COPYING %{buildroot}/usr/share/package-licenses/suricata/COPYING
