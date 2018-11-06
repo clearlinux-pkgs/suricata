@@ -1,4 +1,6 @@
-4.0.5
+4.1.0
+cargo
 doxygen
 libpcap-dev
 pkgconfig(zlib)
+xz-dev
