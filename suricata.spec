@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF7F9B0A300C1B70D (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 4.1.1
-Release  : 17
-URL      : https://www.openinfosecfoundation.org/download/suricata-4.1.1.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-4.1.1.tar.gz
-Source99 : https://www.openinfosecfoundation.org/download/suricata-4.1.1.tar.gz.sig
+Version  : 4.1.2
+Release  : 18
+URL      : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz
+Source99 : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz.sig
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause GPL-2.0 MIT Unlicense
@@ -50,9 +50,7 @@ BuildRequires : xz-dev
 BuildRequires : yaml-dev
 
 %description
-LibHTP
-============================================================================
-============================================================================
+
 
 %package bin
 Summary: bin components for the suricata package.
@@ -148,9 +146,9 @@ services components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-4.1.1
+%setup -q -n suricata-4.1.2
 pushd ..
-cp -a suricata-4.1.1 buildavx2
+cp -a suricata-4.1.2 buildavx2
 popd
 
 %build
@@ -158,7 +156,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545252498
+export SOURCE_DATE_EPOCH=1545429527
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -180,7 +178,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1545252498
+export SOURCE_DATE_EPOCH=1545429527
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp COPYING %{buildroot}/usr/share/package-licenses/suricata/COPYING
