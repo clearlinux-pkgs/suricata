@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.1.2
-Release  : 20
+Release  : 21
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz.sig
@@ -156,8 +156,8 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545429527
-%configure --disable-static
+export SOURCE_DATE_EPOCH=1547747886
+%configure --disable-static --disable-gccmarch-native
 make  %{?_smp_mflags}
 
 unset PKG_CONFIG_PATH
@@ -165,7 +165,7 @@ pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
-%configure --disable-static
+%configure --disable-static --disable-gccmarch-native
 make  %{?_smp_mflags}
 popd
 %check
@@ -178,7 +178,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1545429527
+export SOURCE_DATE_EPOCH=1547747886
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp COPYING %{buildroot}/usr/share/package-licenses/suricata/COPYING
