@@ -6,11 +6,11 @@
 #
 Name     : suricata
 Version  : 4.1.2
-Release  : 21
+Release  : 22
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.1.2.tar.gz.sig
-Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
+Summary  : An Open Source Next Generation Intrusion Detection and Prevention Engine
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause GPL-2.0 MIT Unlicense
 Requires: suricata-bin = %{version}-%{release}
@@ -50,7 +50,7 @@ BuildRequires : xz-dev
 BuildRequires : yaml-dev
 
 %description
-
+This directory contains what's needed for reading the JSON file /var/log/suricata/files-json.log and processing those entries against plugins.  Included are plugins for checking the MD5 of the observed file on the network against already created reports on anubis.iseclab.org, malwr.com, and threatexpert.com.  If you have a virustotal.com API key (free, though see the terms of use on virustotal.com/documentation/public-api/), you can enable the virustotal.com plugin and configure your API key so you can check the MD5 against over forty AV vendors' results.
 
 %package bin
 Summary: bin components for the suricata package.
@@ -79,6 +79,7 @@ Requires: suricata-lib = %{version}-%{release}
 Requires: suricata-bin = %{version}-%{release}
 Requires: suricata-data = %{version}-%{release}
 Provides: suricata-devel = %{version}-%{release}
+Requires: suricata = %{version}-%{release}
 
 %description dev
 dev components for the suricata package.
@@ -156,7 +157,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547747886
+export SOURCE_DATE_EPOCH=1551039162
 %configure --disable-static --disable-gccmarch-native
 make  %{?_smp_mflags}
 
@@ -178,7 +179,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1547747886
+export SOURCE_DATE_EPOCH=1551039162
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp COPYING %{buildroot}/usr/share/package-licenses/suricata/COPYING
