@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 4.1.4
-Release  : 26
+Release  : 27
 URL      : https://www.openinfosecfoundation.org/download/suricata-4.1.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-4.1.4.tar.gz
 Source99 : https://www.openinfosecfoundation.org/download/suricata-4.1.4.tar.gz.sig
