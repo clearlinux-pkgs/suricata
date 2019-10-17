@@ -6,11 +6,11 @@
 #
 Name     : suricata
 Version  : 5.0.0
-Release  : 29
+Release  : 30
 URL      : https://www.openinfosecfoundation.org/download/suricata-5.0.0.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-5.0.0.tar.gz
 Source1 : https://www.openinfosecfoundation.org/download/suricata-5.0.0.tar.gz.sig
-Summary  : An Open Source Next Generation Intrusion Detection and Prevention Engine
+Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause GPL-2.0 HPND MIT Unlicense
 Requires: suricata-bin = %{version}-%{release}
@@ -30,12 +30,18 @@ BuildRequires : Sphinx
 BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
 BuildRequires : doxygen
+BuildRequires : elfutils-dev
 BuildRequires : grep
 BuildRequires : hyperscan-dev
 BuildRequires : jansson-dev
 BuildRequires : libcap-ng-dev
+BuildRequires : libpcap-dev
+BuildRequires : llvm
+BuildRequires : llvm-dev
+BuildRequires : llvm-extras
 BuildRequires : lz4-dev
 BuildRequires : pcre-dev
+BuildRequires : pkgconfig(libbpf)
 BuildRequires : pkgconfig(libhs)
 BuildRequires : pkgconfig(libnetfilter_queue)
 BuildRequires : pkgconfig(libpcap)
@@ -48,10 +54,11 @@ BuildRequires : pkgconfig(zlib)
 BuildRequires : python-dateutil
 BuildRequires : rustc
 BuildRequires : sphinxcontrib-programoutput
+BuildRequires : xz-dev
 BuildRequires : yaml-dev
 
 %description
-This directory contains what's needed for reading the JSON file /var/log/suricata/files-json.log and processing those entries against plugins.  Included are plugins for checking the MD5 of the observed file on the network against already created reports on anubis.iseclab.org, malwr.com, and threatexpert.com.  If you have a virustotal.com API key (free, though see the terms of use on virustotal.com/documentation/public-api/), you can enable the virustotal.com plugin and configure your API key so you can check the MD5 against over forty AV vendors' results.
+
 
 %package bin
 Summary: bin components for the suricata package.
@@ -79,7 +86,6 @@ Requires: suricata-lib = %{version}-%{release}
 Requires: suricata-bin = %{version}-%{release}
 Requires: suricata-data = %{version}-%{release}
 Provides: suricata-devel = %{version}-%{release}
-Requires: suricata = %{version}-%{release}
 Requires: suricata = %{version}-%{release}
 
 %description dev
@@ -158,14 +164,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571169490
-# -Werror is for werrorists
+export SOURCE_DATE_EPOCH=1571346510
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
 export FFLAGS="$CFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
-%configure --disable-static --disable-gccmarch-native
+%configure --disable-static --with-clang=/usr/bin/clang --disable-gccmarch-native --enable-ebpf --enable-ebpf-build
 make  %{?_smp_mflags}
 
 unset PKG_CONFIG_PATH
@@ -173,7 +178,7 @@ pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=haswell"
 export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
-%configure --disable-static --disable-gccmarch-native
+%configure --disable-static --with-clang=/usr/bin/clang --disable-gccmarch-native --enable-ebpf --enable-ebpf-build
 make  %{?_smp_mflags}
 popd
 %check
@@ -186,7 +191,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1571169490
+export SOURCE_DATE_EPOCH=1571346510
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-5.0.0/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
@@ -203,6 +208,7 @@ cp %{_builddir}/suricata-5.0.0/rust/vendor/build_const/LICENSE.txt %{buildroot}/
 cp %{_builddir}/suricata-5.0.0/rust/vendor/byteorder/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
 cp %{_builddir}/suricata-5.0.0/rust/vendor/byteorder/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e
 cp %{_builddir}/suricata-5.0.0/rust/vendor/byteorder/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
+cp %{_builddir}/suricata-5.0.0/rust/vendor/cookie-factory/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e2d62391d392e96241c95aa62ad279aebde68eee
 cp %{_builddir}/suricata-5.0.0/rust/vendor/crc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/dd9b969c81351d17b1585644c99d8fac15f1f523
 cp %{_builddir}/suricata-5.0.0/rust/vendor/crc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/0d46ed4ce7ded1a412f57fc7105208ff4451481b
 cp %{_builddir}/suricata-5.0.0/rust/vendor/der-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
@@ -218,6 +224,7 @@ cp %{_builddir}/suricata-5.0.0/rust/vendor/libc/LICENSE-MIT %{buildroot}/usr/sha
 cp %{_builddir}/suricata-5.0.0/rust/vendor/memchr/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
 cp %{_builddir}/suricata-5.0.0/rust/vendor/memchr/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e
 cp %{_builddir}/suricata-5.0.0/rust/vendor/memchr/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
+cp %{_builddir}/suricata-5.0.0/rust/vendor/nom/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e7b32657d4608cb4a57afa790801ecb9c2a037f5
 cp %{_builddir}/suricata-5.0.0/rust/vendor/ntp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
 cp %{_builddir}/suricata-5.0.0/rust/vendor/ntp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
 cp %{_builddir}/suricata-5.0.0/rust/vendor/num-bigint/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
@@ -290,6 +297,8 @@ cp %{_builddir}/suricata-5.0.0/rust/vendor/unicode-xid/LICENSE-APACHE %{buildroo
 cp %{_builddir}/suricata-5.0.0/rust/vendor/unicode-xid/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/60c3522081bf15d7ac1d4c5a63de425ef253e87a
 cp %{_builddir}/suricata-5.0.0/rust/vendor/version_check/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
 cp %{_builddir}/suricata-5.0.0/rust/vendor/version_check/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/cfcb552ef0afbe7ccb4128891c0de00685988a4b
+cp %{_builddir}/suricata-5.0.0/rust/vendor/widestring/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/ea4215a6204b8414db6209c378a78a2dfb91c9ee
+cp %{_builddir}/suricata-5.0.0/rust/vendor/widestring/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f021a3778be8e7414e81123679384b543612e7b
 cp %{_builddir}/suricata-5.0.0/rust/vendor/winapi/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/92170cdc034b2ff819323ff670d3b7266c8bffcd
 cp %{_builddir}/suricata-5.0.0/rust/vendor/winapi/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/2243f7a86daaa727d34d92e987a741036f288464
 cp %{_builddir}/suricata-5.0.0/rust/vendor/x509-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
@@ -385,6 +394,7 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/share/package-licenses/suricata/60c3522081bf15d7ac1d4c5a63de425ef253e87a
 /usr/share/package-licenses/suricata/92170cdc034b2ff819323ff670d3b7266c8bffcd
 /usr/share/package-licenses/suricata/9a2b6b4ad55ec42cf19fc686c74668d3a6303ae7
+/usr/share/package-licenses/suricata/9f021a3778be8e7414e81123679384b543612e7b
 /usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
 /usr/share/package-licenses/suricata/a00165152c82ea55b9fc254890dc8860c25e3bb6
 /usr/share/package-licenses/suricata/abd2dbb680edc6abdba4bb6a530ab411874538ab
@@ -400,8 +410,11 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
 /usr/share/package-licenses/suricata/dd9b969c81351d17b1585644c99d8fac15f1f523
 /usr/share/package-licenses/suricata/e082d0438f395b9128436ab6628c7a96c009426d
+/usr/share/package-licenses/suricata/e2d62391d392e96241c95aa62ad279aebde68eee
 /usr/share/package-licenses/suricata/e6d32072ef5f584a805b429ecbd4eec428316dde
+/usr/share/package-licenses/suricata/e7b32657d4608cb4a57afa790801ecb9c2a037f5
 /usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+/usr/share/package-licenses/suricata/ea4215a6204b8414db6209c378a78a2dfb91c9ee
 /usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
 /usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
 

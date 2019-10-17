@@ -1,4 +1,5 @@
 ld-linux-x86-64.so.2
+libbpf.so.0
 libc.so.6
 libcap-ng.so.0
 libdl.so.2

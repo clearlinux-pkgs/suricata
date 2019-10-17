@@ -1,1 +1,1 @@
---disable-gccmarch-native
+--with-clang=/usr/bin/clang --disable-gccmarch-native --enable-ebpf --enable-ebpf-build

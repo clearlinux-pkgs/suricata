@@ -1,10 +1,13 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
-hyperscan-dev
-yaml-dev
+Sphinx
 curl-dev
+hyperscan-dev
 jansson-dev
 libcap-ng-dev
-Sphinx
+llvm
+llvm-dev
+llvm-extras
 lz4-dev
 rustc
+yaml-dev

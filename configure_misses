@@ -3,6 +3,7 @@ Configure miss: ws2tcpip.h
 Configure miss: w32api/wtypes.h
 Configure miss: w32api/winbase.h
 Configure miss: wincrypt.h
+Configure miss: llc-9.0
 Configure miss: spatch
 Configure miss: LIBPCREVERSION
 Configure miss: whether OS_WIN32 is declared
@@ -16,6 +17,7 @@ Configure miss: ws2tcpip.h
 Configure miss: w32api/wtypes.h
 Configure miss: w32api/winbase.h
 Configure miss: wincrypt.h
+Configure miss: llc-9.0
 Configure miss: spatch
 Configure miss: LIBPCREVERSION
 Configure miss: whether OS_WIN32 is declared
