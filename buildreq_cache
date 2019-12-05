@@ -1,6 +1,7 @@
 5.0.0
 doxygen
 elfutils-dev
+file-dev
 libpcap-dev
 pcre-dev
 pkgconfig(zlib)
