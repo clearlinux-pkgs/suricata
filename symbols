@@ -214,6 +214,7 @@ libhtp.so.2:htp_connp_is_line_ignorable
 libhtp.so.2:htp_connp_is_line_terminator
 libhtp.so.2:htp_connp_open
 libhtp.so.2:htp_connp_out_state_as_string
+libhtp.so.2:htp_connp_req_close
 libhtp.so.2:htp_connp_req_data
 libhtp.so.2:htp_connp_req_data_consumed
 libhtp.so.2:htp_connp_req_receiver_finalize_clear

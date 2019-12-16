@@ -10,7 +10,6 @@ Configure miss: whether OS_WIN32 is declared
 Configure miss: libnet.h version 1.1.x
 Configure miss: libiconv_close in -liconv
 Configure miss: rustup
-Configure miss: cargo-vendor
 Configure miss: lcov
 Configure miss: cygpath
 Configure miss: ws2tcpip.h
@@ -24,5 +23,4 @@ Configure miss: whether OS_WIN32 is declared
 Configure miss: libnet.h version 1.1.x
 Configure miss: libiconv_close in -liconv
 Configure miss: rustup
-Configure miss: cargo-vendor
 Configure miss: lcov
