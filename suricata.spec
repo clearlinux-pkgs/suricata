@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xF7F9B0A300C1B70D (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 5.0.1
-Release  : 35
-URL      : https://www.openinfosecfoundation.org/download/suricata-5.0.1.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-5.0.1.tar.gz
-Source1  : https://www.openinfosecfoundation.org/download/suricata-5.0.1.tar.gz.sig
+Version  : 5.0.2
+Release  : 36
+URL      : https://www.openinfosecfoundation.org/download/suricata-5.0.2.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-5.0.2.tar.gz
+Source1  : https://www.openinfosecfoundation.org/download/suricata-5.0.2.tar.gz.sig
 Summary  : An Open Source Next Generation Intrusion Detection and Prevention Engine
 Group    : Development/Tools
 License  : Apache-2.0 BSD-3-Clause GPL-2.0 HPND MIT Unlicense
@@ -152,10 +152,10 @@ services components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-5.0.1
-cd %{_builddir}/suricata-5.0.1
+%setup -q -n suricata-5.0.2
+cd %{_builddir}/suricata-5.0.2
 pushd ..
-cp -a suricata-5.0.1 buildavx2
+cp -a suricata-5.0.2 buildavx2
 popd
 
 %build
@@ -163,7 +163,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1576536931
+export SOURCE_DATE_EPOCH=1581611163
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
@@ -191,119 +191,121 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1576536931
+export SOURCE_DATE_EPOCH=1581611163
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
-cp %{_builddir}/suricata-5.0.1/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/suricata-5.0.1/LICENSE %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/suricata-5.0.1/contrib/file_processor/LICENSE %{buildroot}/usr/share/package-licenses/suricata/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
-cp %{_builddir}/suricata-5.0.1/libhtp/LICENSE %{buildroot}/usr/share/package-licenses/suricata/ae3dd05d579644da55a95de2cf7f256b15fa4db0
-cp %{_builddir}/suricata-5.0.1/rust/vendor/autocfg/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/autocfg/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/e6d32072ef5f584a805b429ecbd4eec428316dde
-cp %{_builddir}/suricata-5.0.1/rust/vendor/base64/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/base64/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/b716916e6b0b96af5ecadf1eaee25f966f5d6cb2
-cp %{_builddir}/suricata-5.0.1/rust/vendor/bitflags/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/bitflags/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/build_const/LICENSE.txt %{buildroot}/usr/share/package-licenses/suricata/b5926737d6a950b5e7714401ebeb8c56f80dc137
-cp %{_builddir}/suricata-5.0.1/rust/vendor/byteorder/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
-cp %{_builddir}/suricata-5.0.1/rust/vendor/byteorder/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/byteorder/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
-cp %{_builddir}/suricata-5.0.1/rust/vendor/cookie-factory/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e2d62391d392e96241c95aa62ad279aebde68eee
-cp %{_builddir}/suricata-5.0.1/rust/vendor/crc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/dd9b969c81351d17b1585644c99d8fac15f1f523
-cp %{_builddir}/suricata-5.0.1/rust/vendor/crc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/0d46ed4ce7ded1a412f57fc7105208ff4451481b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/der-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/der-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/enum_primitive/LICENSE %{buildroot}/usr/share/package-licenses/suricata/abd2dbb680edc6abdba4bb6a530ab411874538ab
-cp %{_builddir}/suricata-5.0.1/rust/vendor/fuchsia-cprng/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e082d0438f395b9128436ab6628c7a96c009426d
-cp %{_builddir}/suricata-5.0.1/rust/vendor/ipsec-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/ipsec-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/kerberos-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/kerberos-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/libc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/libc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/memchr/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
-cp %{_builddir}/suricata-5.0.1/rust/vendor/memchr/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/memchr/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
-cp %{_builddir}/suricata-5.0.1/rust/vendor/nom/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e7b32657d4608cb4a57afa790801ecb9c2a037f5
-cp %{_builddir}/suricata-5.0.1/rust/vendor/ntp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/ntp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-bigint/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-bigint/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-complex/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-complex/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-derive/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-derive/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-integer/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-integer/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-iter/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-iter/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-rational/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-rational/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-traits-0.1.43/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-traits-0.1.43/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-traits/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num-traits/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/num/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/proc-macro2/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/proc-macro2/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/3b042d3d971924ec0296687efd50dbe08b734976
-cp %{_builddir}/suricata-5.0.1/rust/vendor/quote/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/quote/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9a2b6b4ad55ec42cf19fc686c74668d3a6303ae7
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_chacha/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_chacha/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_chacha/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_core-0.3.1/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_core-0.3.1/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_core-0.3.1/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_core/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_core/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_core/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_hc/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_hc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_hc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/2e87f5a7544123079270e8178a5ab0bbd19d0e51
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_isaac/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_isaac/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_isaac/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_jitter/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_jitter/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_jitter/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_os/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_os/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_os/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_pcg/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_pcg/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_pcg/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ac1dc5ec3778e81d0e4041cc84de9f32fd81c663
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_xorshift/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_xorshift/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rand_xorshift/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rdrand/LICENSE %{buildroot}/usr/share/package-licenses/suricata/ced8b50e816dfeba0fa899df8f5526a8ec1c1d0b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/redox_syscall/LICENSE %{buildroot}/usr/share/package-licenses/suricata/a00165152c82ea55b9fc254890dc8860c25e3bb6
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rusticata-macros/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/rusticata-macros/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/siphasher/COPYING %{buildroot}/usr/share/package-licenses/suricata/1fa93df46254c46478d6aad7df9ec5e199694113
-cp %{_builddir}/suricata-5.0.1/rust/vendor/snmp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/snmp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/syn/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/syn/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ce3a2603094e799f42ce99c40941544dfcc5c4a5
-cp %{_builddir}/suricata-5.0.1/rust/vendor/time/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/time/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
-cp %{_builddir}/suricata-5.0.1/rust/vendor/tls-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/tls-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/unicode-xid/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/5ed53061419caf64f84d064f3641392a2a10fa7f
-cp %{_builddir}/suricata-5.0.1/rust/vendor/unicode-xid/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/unicode-xid/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/60c3522081bf15d7ac1d4c5a63de425ef253e87a
-cp %{_builddir}/suricata-5.0.1/rust/vendor/version_check/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/version_check/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/cfcb552ef0afbe7ccb4128891c0de00685988a4b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/widestring/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/ea4215a6204b8414db6209c378a78a2dfb91c9ee
-cp %{_builddir}/suricata-5.0.1/rust/vendor/widestring/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f021a3778be8e7414e81123679384b543612e7b
-cp %{_builddir}/suricata-5.0.1/rust/vendor/winapi/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/92170cdc034b2ff819323ff670d3b7266c8bffcd
-cp %{_builddir}/suricata-5.0.1/rust/vendor/winapi/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/2243f7a86daaa727d34d92e987a741036f288464
-cp %{_builddir}/suricata-5.0.1/rust/vendor/x509-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
-cp %{_builddir}/suricata-5.0.1/rust/vendor/x509-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
-cp %{_builddir}/suricata-5.0.1/suricata-update/LICENSE %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/suricata-5.0.2/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/suricata-5.0.2/LICENSE %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/suricata-5.0.2/contrib/file_processor/LICENSE %{buildroot}/usr/share/package-licenses/suricata/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/suricata-5.0.2/libhtp/LICENSE %{buildroot}/usr/share/package-licenses/suricata/ae3dd05d579644da55a95de2cf7f256b15fa4db0
+cp %{_builddir}/suricata-5.0.2/rust/vendor/autocfg-0.1.7/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/autocfg-0.1.7/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/e6d32072ef5f584a805b429ecbd4eec428316dde
+cp %{_builddir}/suricata-5.0.2/rust/vendor/autocfg/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/autocfg/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/e6d32072ef5f584a805b429ecbd4eec428316dde
+cp %{_builddir}/suricata-5.0.2/rust/vendor/base64/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/base64/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/b716916e6b0b96af5ecadf1eaee25f966f5d6cb2
+cp %{_builddir}/suricata-5.0.2/rust/vendor/bitflags/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/bitflags/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/build_const/LICENSE.txt %{buildroot}/usr/share/package-licenses/suricata/b5926737d6a950b5e7714401ebeb8c56f80dc137
+cp %{_builddir}/suricata-5.0.2/rust/vendor/byteorder/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
+cp %{_builddir}/suricata-5.0.2/rust/vendor/byteorder/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/byteorder/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
+cp %{_builddir}/suricata-5.0.2/rust/vendor/cookie-factory/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e2d62391d392e96241c95aa62ad279aebde68eee
+cp %{_builddir}/suricata-5.0.2/rust/vendor/crc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/dd9b969c81351d17b1585644c99d8fac15f1f523
+cp %{_builddir}/suricata-5.0.2/rust/vendor/crc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/0d46ed4ce7ded1a412f57fc7105208ff4451481b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/der-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/der-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/enum_primitive/LICENSE %{buildroot}/usr/share/package-licenses/suricata/abd2dbb680edc6abdba4bb6a530ab411874538ab
+cp %{_builddir}/suricata-5.0.2/rust/vendor/fuchsia-cprng/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e082d0438f395b9128436ab6628c7a96c009426d
+cp %{_builddir}/suricata-5.0.2/rust/vendor/ipsec-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/ipsec-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/kerberos-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/kerberos-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/libc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/libc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/memchr/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
+cp %{_builddir}/suricata-5.0.2/rust/vendor/memchr/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/memchr/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85
+cp %{_builddir}/suricata-5.0.2/rust/vendor/nom/LICENSE %{buildroot}/usr/share/package-licenses/suricata/e7b32657d4608cb4a57afa790801ecb9c2a037f5
+cp %{_builddir}/suricata-5.0.2/rust/vendor/ntp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/ntp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-bigint/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-bigint/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-complex/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-complex/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-derive/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-derive/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-integer/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-integer/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-iter/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-iter/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-rational/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-rational/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-traits-0.1.43/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-traits-0.1.43/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-traits/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num-traits/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/num/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/proc-macro2/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/proc-macro2/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/3b042d3d971924ec0296687efd50dbe08b734976
+cp %{_builddir}/suricata-5.0.2/rust/vendor/quote/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/quote/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9a2b6b4ad55ec42cf19fc686c74668d3a6303ae7
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_chacha/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_chacha/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_chacha/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_core-0.3.1/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_core-0.3.1/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_core-0.3.1/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_core/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_core/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_core/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_hc/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_hc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_hc/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/2e87f5a7544123079270e8178a5ab0bbd19d0e51
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_isaac/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_isaac/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_isaac/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_jitter/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_jitter/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_jitter/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_os/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_os/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_os/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_pcg/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_pcg/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_pcg/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ac1dc5ec3778e81d0e4041cc84de9f32fd81c663
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_xorshift/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_xorshift/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rand_xorshift/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rdrand/LICENSE %{buildroot}/usr/share/package-licenses/suricata/ced8b50e816dfeba0fa899df8f5526a8ec1c1d0b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/redox_syscall/LICENSE %{buildroot}/usr/share/package-licenses/suricata/a00165152c82ea55b9fc254890dc8860c25e3bb6
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rusticata-macros/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/rusticata-macros/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/siphasher/COPYING %{buildroot}/usr/share/package-licenses/suricata/1fa93df46254c46478d6aad7df9ec5e199694113
+cp %{_builddir}/suricata-5.0.2/rust/vendor/snmp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/snmp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/syn/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/syn/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ce3a2603094e799f42ce99c40941544dfcc5c4a5
+cp %{_builddir}/suricata-5.0.2/rust/vendor/time/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/time/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636
+cp %{_builddir}/suricata-5.0.2/rust/vendor/tls-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/tls-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/unicode-xid/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/5ed53061419caf64f84d064f3641392a2a10fa7f
+cp %{_builddir}/suricata-5.0.2/rust/vendor/unicode-xid/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/unicode-xid/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/60c3522081bf15d7ac1d4c5a63de425ef253e87a
+cp %{_builddir}/suricata-5.0.2/rust/vendor/version_check/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/version_check/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/cfcb552ef0afbe7ccb4128891c0de00685988a4b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/widestring/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/ea4215a6204b8414db6209c378a78a2dfb91c9ee
+cp %{_builddir}/suricata-5.0.2/rust/vendor/widestring/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f021a3778be8e7414e81123679384b543612e7b
+cp %{_builddir}/suricata-5.0.2/rust/vendor/winapi/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/92170cdc034b2ff819323ff670d3b7266c8bffcd
+cp %{_builddir}/suricata-5.0.2/rust/vendor/winapi/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/2243f7a86daaa727d34d92e987a741036f288464
+cp %{_builddir}/suricata-5.0.2/rust/vendor/x509-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
+cp %{_builddir}/suricata-5.0.2/rust/vendor/x509-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
+cp %{_builddir}/suricata-5.0.2/suricata-update/LICENSE %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
 pushd ../buildavx2/
 %make_install_avx2
 popd
