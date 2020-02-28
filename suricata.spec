@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 5.0.2
-Release  : 36
+Release  : 37
 URL      : https://www.openinfosecfoundation.org/download/suricata-5.0.2.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-5.0.2.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-5.0.2.tar.gz.sig
@@ -163,7 +163,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1581611163
+export SOURCE_DATE_EPOCH=1582914593
 # -Werror is for werrorists
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
@@ -191,7 +191,7 @@ cd ../buildavx2;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1581611163
+export SOURCE_DATE_EPOCH=1582914593
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-5.0.2/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
