@@ -141,6 +141,7 @@ libhtp.so.2:htp_config_set_convert_lowercase
 libhtp.so.2:htp_config_set_extract_request_files
 libhtp.so.2:htp_config_set_field_limits
 libhtp.so.2:htp_config_set_log_level
+libhtp.so.2:htp_config_set_lzma_layers
 libhtp.so.2:htp_config_set_lzma_memlimit
 libhtp.so.2:htp_config_set_nul_encoded_terminates
 libhtp.so.2:htp_config_set_nul_encoded_unwanted

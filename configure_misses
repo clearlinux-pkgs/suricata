@@ -1,4 +1,7 @@
 Configure miss: cygpath
+Configure miss: mach/mach.h usability
+Configure miss: mach/mach.h presence
+Configure miss: mach/mach.h
 Configure miss: ws2tcpip.h
 Configure miss: w32api/wtypes.h
 Configure miss: w32api/winbase.h
@@ -8,10 +11,15 @@ Configure miss: spatch
 Configure miss: LIBPCREVERSION
 Configure miss: whether OS_WIN32 is declared
 Configure miss: libnet.h version 1.1.x
+Configure miss: pcap/bpf.h
 Configure miss: libiconv_close in -liconv
 Configure miss: rustup
+Configure miss: cbindgen
 Configure miss: lcov
 Configure miss: cygpath
+Configure miss: mach/mach.h usability
+Configure miss: mach/mach.h presence
+Configure miss: mach/mach.h
 Configure miss: ws2tcpip.h
 Configure miss: w32api/wtypes.h
 Configure miss: w32api/winbase.h
@@ -21,6 +29,8 @@ Configure miss: spatch
 Configure miss: LIBPCREVERSION
 Configure miss: whether OS_WIN32 is declared
 Configure miss: libnet.h version 1.1.x
+Configure miss: pcap/bpf.h
 Configure miss: libiconv_close in -liconv
 Configure miss: rustup
+Configure miss: cbindgen
 Configure miss: lcov

@@ -1,5 +1,5 @@
 PKG_NAME := suricata
-URL = https://www.openinfosecfoundation.org/download/suricata-5.0.3.tar.gz
+URL = https://www.openinfosecfoundation.org/download/suricata-6.0.0.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
