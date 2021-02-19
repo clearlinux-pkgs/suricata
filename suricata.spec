@@ -4,7 +4,7 @@
 #
 Name     : suricata
 Version  : 6.0.1
-Release  : 44
+Release  : 45
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.1.tar.gz
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
