@@ -1,1 +1,5 @@
---with-clang=/usr/bin/clang --disable-gccmarch-native --enable-ebpf --enable-ebpf-build
+--with-clang=/usr/bin/clang
+--disable-gccmarch-native
+--enable-ebpf
+--enable-ebpf-build
+--enable-lua

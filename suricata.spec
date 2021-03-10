@@ -4,7 +4,7 @@
 #
 Name     : suricata
 Version  : 6.0.2
-Release  : 46
+Release  : 47
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.2.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.2.tar.gz
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
@@ -159,13 +159,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1614788242
+export SOURCE_DATE_EPOCH=1615419746
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
 export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
-%configure --disable-static --with-clang=/usr/bin/clang --disable-gccmarch-native --enable-ebpf --enable-ebpf-build
+%configure --disable-static --with-clang=/usr/bin/clang \
+--disable-gccmarch-native \
+--enable-ebpf \
+--enable-ebpf-build \
+--enable-lua
 make  %{?_smp_mflags}
 
 unset PKG_CONFIG_PATH
@@ -175,7 +179,11 @@ export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
 export FFLAGS="$FFLAGS -m64 -march=haswell"
 export FCFLAGS="$FCFLAGS -m64 -march=haswell"
 export LDFLAGS="$LDFLAGS -m64 -march=haswell"
-%configure --disable-static --with-clang=/usr/bin/clang --disable-gccmarch-native --enable-ebpf --enable-ebpf-build
+%configure --disable-static --with-clang=/usr/bin/clang \
+--disable-gccmarch-native \
+--enable-ebpf \
+--enable-ebpf-build \
+--enable-lua
 make  %{?_smp_mflags}
 popd
 %check
@@ -188,7 +196,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1614788242
+export SOURCE_DATE_EPOCH=1615419746
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-6.0.2/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
@@ -313,7 +321,9 @@ cp %{_builddir}/suricata-6.0.2/rust/vendor/unicode-xid-0.1.0/LICENSE-MIT %{build
 cp %{_builddir}/suricata-6.0.2/rust/vendor/unicode-xid/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/5ed53061419caf64f84d064f3641392a2a10fa7f
 cp %{_builddir}/suricata-6.0.2/rust/vendor/unicode-xid/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
 cp %{_builddir}/suricata-6.0.2/rust/vendor/unicode-xid/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/60c3522081bf15d7ac1d4c5a63de425ef253e87a
+cp %{_builddir}/suricata-6.0.2/rust/vendor/uuid/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/5b2ba30524cd989a1f2e6d9447d77d6f1a1a13b9
 cp %{_builddir}/suricata-6.0.2/rust/vendor/uuid/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/aca374a3362a76702c50bd4e7d590a57f8834fc7
+cp %{_builddir}/suricata-6.0.2/rust/vendor/uuid/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/0eb133022d740845d4047083a552afa05e3862f5
 cp %{_builddir}/suricata-6.0.2/rust/vendor/version_check/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
 cp %{_builddir}/suricata-6.0.2/rust/vendor/version_check/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/cfcb552ef0afbe7ccb4128891c0de00685988a4b
 cp %{_builddir}/suricata-6.0.2/rust/vendor/wasi-0.9.0+wasi-snapshot-preview1/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
@@ -410,6 +420,7 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/share/package-licenses/suricata/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
 /usr/share/package-licenses/suricata/088830dcb78eba1a2052df69bd5cba5445e8f2d7
 /usr/share/package-licenses/suricata/0d46ed4ce7ded1a412f57fc7105208ff4451481b
+/usr/share/package-licenses/suricata/0eb133022d740845d4047083a552afa05e3862f5
 /usr/share/package-licenses/suricata/2243f7a86daaa727d34d92e987a741036f288464
 /usr/share/package-licenses/suricata/27ea6989d4f34b7b944eb884410a31ae20d11686
 /usr/share/package-licenses/suricata/2b8b815229aa8a61e483fb4ba0588b8b6c491890
@@ -422,6 +433,7 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
 /usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229
 /usr/share/package-licenses/suricata/594599b254cfdf4e8e7a570660d3f7861362acaf
+/usr/share/package-licenses/suricata/5b2ba30524cd989a1f2e6d9447d77d6f1a1a13b9
 /usr/share/package-licenses/suricata/5ed53061419caf64f84d064f3641392a2a10fa7f
 /usr/share/package-licenses/suricata/5feaf15b3fa7d2d226d811e5fcd49098a1ea520c
 /usr/share/package-licenses/suricata/60c3522081bf15d7ac1d4c5a63de425ef253e87a

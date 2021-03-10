@@ -6,6 +6,7 @@ libdl.so.2
 libgcc_s.so.1
 libhs.so.5
 libjansson.so.4
+liblua.so.5.4
 liblz4.so.1
 libm.so.6
 libmagic.so.1
