@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 6.0.3
-Release  : 53
+Release  : 54
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.3.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.3.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.3.tar.gz.sig
@@ -15,6 +15,7 @@ Group    : Development/Tools
 License  : 0BSD Apache-2.0 BSD-3-Clause BSL-1.0 GPL-2.0 MIT Unlicense Zlib
 Requires: suricata-bin = %{version}-%{release}
 Requires: suricata-data = %{version}-%{release}
+Requires: suricata-filemap = %{version}-%{release}
 Requires: suricata-lib = %{version}-%{release}
 Requires: suricata-license = %{version}-%{release}
 Requires: suricata-man = %{version}-%{release}
@@ -65,6 +66,7 @@ Group: Binaries
 Requires: suricata-data = %{version}-%{release}
 Requires: suricata-license = %{version}-%{release}
 Requires: suricata-services = %{version}-%{release}
+Requires: suricata-filemap = %{version}-%{release}
 
 %description bin
 bin components for the suricata package.
@@ -100,11 +102,20 @@ Requires: suricata-man = %{version}-%{release}
 doc components for the suricata package.
 
 
+%package filemap
+Summary: filemap components for the suricata package.
+Group: Default
+
+%description filemap
+filemap components for the suricata package.
+
+
 %package lib
 Summary: lib components for the suricata package.
 Group: Libraries
 Requires: suricata-data = %{version}-%{release}
 Requires: suricata-license = %{version}-%{release}
+Requires: suricata-filemap = %{version}-%{release}
 
 %description lib
 lib components for the suricata package.
@@ -130,6 +141,7 @@ man components for the suricata package.
 Summary: python components for the suricata package.
 Group: Default
 Requires: suricata-python3 = %{version}-%{release}
+Requires: suricata-filemap = %{version}-%{release}
 
 %description python
 python components for the suricata package.
@@ -164,7 +176,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1625097866
+export SOURCE_DATE_EPOCH=1633812589
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -179,11 +191,11 @@ make  %{?_smp_mflags}
 
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
-export CFLAGS="$CFLAGS -m64 -march=haswell"
-export CXXFLAGS="$CXXFLAGS -m64 -march=haswell"
-export FFLAGS="$FFLAGS -m64 -march=haswell"
-export FCFLAGS="$FCFLAGS -m64 -march=haswell"
-export LDFLAGS="$LDFLAGS -m64 -march=haswell"
+export CFLAGS="$CFLAGS -m64 -march=x86-64-v3"
+export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3"
+export FFLAGS="$FFLAGS -m64 -march=x86-64-v3"
+export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
+export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %configure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
 --enable-ebpf \
@@ -201,7 +213,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1625097866
+export SOURCE_DATE_EPOCH=1633812589
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-6.0.3/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
@@ -360,7 +372,8 @@ cp %{_builddir}/suricata-6.0.3/rust/vendor/x509-parser/LICENSE-APACHE %{buildroo
 cp %{_builddir}/suricata-6.0.3/rust/vendor/x509-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b
 cp %{_builddir}/suricata-6.0.3/suricata-update/LICENSE %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
 pushd ../buildavx2/
-%make_install_avx2
+%make_install_v3
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 popd
 %make_install
 ## install_append content
@@ -372,11 +385,11 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/haswell/suricata
 /usr/bin/suricata
 /usr/bin/suricata-update
 /usr/bin/suricatactl
 /usr/bin/suricatasc
+/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -420,7 +433,6 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/include/htp/lzma/7zTypes.h
 /usr/include/htp/lzma/LzmaDec.h
 /usr/include/suricata-plugin.h
-/usr/lib64/haswell/libhtp.so
 /usr/lib64/libhtp.so
 /usr/lib64/pkgconfig/htp.pc
 
@@ -428,12 +440,15 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 %defattr(0644,root,root,0755)
 %doc /usr/share/doc/suricata/*
 
+%files filemap
+%defattr(-,root,root,-)
+/usr/share/clear/filemap/filemap-suricata
+
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/haswell/libhtp.so.2
-/usr/lib64/haswell/libhtp.so.2.0.0
 /usr/lib64/libhtp.so.2
 /usr/lib64/libhtp.so.2.0.0
+/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
