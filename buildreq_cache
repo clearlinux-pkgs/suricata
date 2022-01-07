@@ -1,4 +1,7 @@
 6.0.4
+Sphinx
 doxygen
 file-dev
 pcre-dev
+pypi(python_dateutil)
+pypi(sphinxcontrib_programoutput)

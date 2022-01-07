@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 6.0.4
-Release  : 60
+Release  : 61
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.4.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.4.tar.gz.sig
@@ -22,11 +22,6 @@ Requires: suricata-man = %{version}-%{release}
 Requires: suricata-python = %{version}-%{release}
 Requires: suricata-python3 = %{version}-%{release}
 Requires: suricata-services = %{version}-%{release}
-Requires: PyYAML
-Requires: Sphinx
-Requires: python-dateutil
-Requires: sphinxcontrib-programoutput
-BuildRequires : PyYAML
 BuildRequires : Sphinx
 BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
@@ -50,9 +45,11 @@ BuildRequires : pkgconfig(lua)
 BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(nspr)
 BuildRequires : pkgconfig(nss)
-BuildRequires : python-dateutil
+BuildRequires : pypi(python_dateutil)
+BuildRequires : pypi(pyyaml)
+BuildRequires : pypi(sphinx)
+BuildRequires : pypi(sphinxcontrib_programoutput)
 BuildRequires : rustc
-BuildRequires : sphinxcontrib-programoutput
 BuildRequires : yaml-dev
 
 %description
@@ -151,6 +148,7 @@ python components for the suricata package.
 Summary: python3 components for the suricata package.
 Group: Default
 Requires: python3-core
+Requires: pypi(pyyaml)
 
 %description python3
 python3 components for the suricata package.
@@ -176,7 +174,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1637257227
+export SOURCE_DATE_EPOCH=1641591835
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -213,7 +211,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1637257227
+export SOURCE_DATE_EPOCH=1641591835
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-6.0.4/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
