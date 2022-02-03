@@ -7,7 +7,6 @@ jansson-dev
 libcap-ng-dev
 llvm
 llvm-dev
-llvm-extras
 lz4-dev
 rustc
 yaml-dev

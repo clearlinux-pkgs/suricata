@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 6.0.4
-Release  : 66
+Release  : 67
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.4.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.4.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.4.tar.gz.sig
@@ -32,7 +32,6 @@ BuildRequires : jansson-dev
 BuildRequires : libcap-ng-dev
 BuildRequires : llvm
 BuildRequires : llvm-dev
-BuildRequires : llvm-extras
 BuildRequires : lz4-dev
 BuildRequires : pcre-dev
 BuildRequires : pkgconfig(libbpf)
@@ -174,7 +173,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1642553803
+export SOURCE_DATE_EPOCH=1643911694
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -211,7 +210,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1642553803
+export SOURCE_DATE_EPOCH=1643911694
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-6.0.4/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
