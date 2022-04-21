@@ -1,7 +1,4 @@
-6.0.4
+6.0.5
 doxygen
 file-dev
 pcre-dev
-pypi(python_dateutil)
-pypi(sphinx)
-pypi(sphinxcontrib_programoutput)
