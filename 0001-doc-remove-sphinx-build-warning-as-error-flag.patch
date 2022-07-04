@@ -1,0 +1,66 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Mon, 4 Jul 2022 21:45:41 +0000
+Subject: [PATCH] doc: remove sphinx-build warning-as-error flag
+
+In case new versions of sphinx-build begin to produce warnings, make
+sure these warnings are not converted to errors. The warning-as-error
+flag is more appropriate for upstream developers, not for distributions.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ doc/devguide/Makefile.am  | 4 ++--
+ doc/userguide/Makefile.am | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/doc/devguide/Makefile.am b/doc/devguide/Makefile.am
+index 44317c6..3bd26d9 100644
+--- a/doc/devguide/Makefile.am
++++ b/doc/devguide/Makefile.am
+@@ -33,14 +33,14 @@ html:
+ 	sysconfdir=$(sysconfdir) \
+ 	localstatedir=$(localstatedir) \
+ 	version=$(PACKAGE_VERSION) \
+-		$(SPHINX_BUILD) -W -b html -d _build/doctrees \
++		$(SPHINX_BUILD) -b html -d _build/doctrees \
+ 		$(top_srcdir)/doc/devguide _build/html
+ 
+ _build/latex/Suricata.pdf:
+ 	sysconfdir=$(sysconfdir) \
+ 	localstatedir=$(localstatedir) \
+ 	version=$(PACKAGE_VERSION) \
+-		$(SPHINX_BUILD) -W -b latex -d _build/doctrees \
++		$(SPHINX_BUILD) -b latex -d _build/doctrees \
+ 		$(top_srcdir)/doc/devguide _build/latex
+ # The Sphinx generated Makefile is GNU Make specific, so just do what
+ # it does here - yes, multiple passes of pdflatex is required.
+diff --git a/doc/userguide/Makefile.am b/doc/userguide/Makefile.am
+index b6c9888..372d918 100644
+--- a/doc/userguide/Makefile.am
++++ b/doc/userguide/Makefile.am
+@@ -47,14 +47,14 @@ html:
+ 	sysconfdir=$(sysconfdir) \
+ 	localstatedir=$(localstatedir) \
+ 	version=$(PACKAGE_VERSION) \
+-		$(SPHINX_BUILD) -W -b html -d _build/doctrees \
++		$(SPHINX_BUILD) -b html -d _build/doctrees \
+ 		$(top_srcdir)/doc/userguide _build/html
+ 
+ _build/latex/Suricata.pdf:
+ 	sysconfdir=$(sysconfdir) \
+ 	localstatedir=$(localstatedir) \
+ 	version=$(PACKAGE_VERSION) \
+-		$(SPHINX_BUILD) -W -b latex -d _build/doctrees \
++		$(SPHINX_BUILD) -b latex -d _build/doctrees \
+ 		$(top_srcdir)/doc/userguide _build/latex
+ # The Sphinx generated Makefile is GNU Make specific, so just do what
+ # it does here - yes, multiple passes of pdflatex is required.
+@@ -74,7 +74,7 @@ _build/man: manpages/suricata.rst manpages/suricatasc.rst manpages/suricatactl.r
+ 	sysconfdir=$(sysconfdir) \
+ 	localstatedir=$(localstatedir) \
+ 	version=$(PACKAGE_VERSION) \
+-		$(SPHINX_BUILD) -W -b man -d _build/doctrees \
++		$(SPHINX_BUILD) -b man -d _build/doctrees \
+ 		$(top_srcdir)/doc/userguide _build/man
+ 	touch _build/man
+ 

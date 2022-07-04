@@ -1,23 +1,25 @@
-Configure miss: LIBPCREVERSION
-Configure miss: LIBPCREVERSION
 Configure miss: cbindgen
 Configure miss: cbindgen
 Configure miss: cygpath
 Configure miss: cygpath
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: g++ option to enable C++11 features
+Configure miss: gcc options needed to detect all undeclared functions
+Configure miss: gcc options needed to detect all undeclared functions
 Configure miss: lcov
 Configure miss: lcov
 Configure miss: libiconv_close in -liconv
 Configure miss: libiconv_close in -liconv
 Configure miss: libnet.h version 1.1.x
 Configure miss: libnet.h version 1.1.x
-Configure miss: llc-11.1
-Configure miss: llc-11.1
+Configure miss: libpcre = 8.35
+Configure miss: libpcre = 8.35
+Configure miss: llc-14.0
+Configure miss: llc-14.0
 Configure miss: mach/mach.h
 Configure miss: mach/mach.h
-Configure miss: mach/mach.h presence
-Configure miss: mach/mach.h presence
-Configure miss: mach/mach.h usability
-Configure miss: mach/mach.h usability
 Configure miss: pcap/bpf.h
 Configure miss: pcap/bpf.h
 Configure miss: rustup
@@ -34,3 +36,7 @@ Configure miss: wincrypt.h
 Configure miss: wincrypt.h
 Configure miss: ws2tcpip.h
 Configure miss: ws2tcpip.h
+Configure miss: x86_64-generic-linux-gnu-file
+Configure miss: x86_64-generic-linux-gnu-file
+Configure miss: x86_64-generic-linux-gnu-file
+Configure miss: x86_64-generic-linux-gnu-file

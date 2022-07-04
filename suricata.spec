@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 6.0.5
-Release  : 68
+Release  : 69
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.5.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.5.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.5.tar.gz.sig
@@ -22,18 +22,25 @@ Requires: suricata-man = %{version}-%{release}
 Requires: suricata-python = %{version}-%{release}
 Requires: suricata-python3 = %{version}-%{release}
 Requires: suricata-services = %{version}-%{release}
+BuildRequires : automake
+BuildRequires : automake-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
 BuildRequires : doxygen
 BuildRequires : file-dev
+BuildRequires : gettext-bin
 BuildRequires : grep
 BuildRequires : hyperscan-dev
 BuildRequires : jansson-dev
 BuildRequires : libcap-ng-dev
+BuildRequires : libtool
+BuildRequires : libtool-dev
 BuildRequires : llvm
 BuildRequires : llvm-dev
 BuildRequires : lz4-dev
+BuildRequires : m4
 BuildRequires : pcre-dev
+BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(libbpf)
 BuildRequires : pkgconfig(libhs)
 BuildRequires : pkgconfig(libnetfilter_queue)
@@ -50,6 +57,7 @@ BuildRequires : pypi(sphinxcontrib_programoutput)
 BuildRequires : pypi-sphinx
 BuildRequires : rustc
 BuildRequires : yaml-dev
+Patch1: 0001-doc-remove-sphinx-build-warning-as-error-flag.patch
 
 %description
 LibHTP
@@ -137,7 +145,6 @@ man components for the suricata package.
 Summary: python components for the suricata package.
 Group: Default
 Requires: suricata-python3 = %{version}-%{release}
-Requires: suricata-filemap = %{version}-%{release}
 
 %description python
 python components for the suricata package.
@@ -146,6 +153,7 @@ python components for the suricata package.
 %package python3
 Summary: python3 components for the suricata package.
 Group: Default
+Requires: suricata-filemap = %{version}-%{release}
 Requires: python3-core
 Requires: pypi(python_dateutil)
 Requires: pypi(pyyaml)
@@ -167,6 +175,7 @@ services components for the suricata package.
 %prep
 %setup -q -n suricata-6.0.5
 cd %{_builddir}/suricata-6.0.5
+%patch1 -p1
 pushd ..
 cp -a suricata-6.0.5 buildavx2
 popd
@@ -176,19 +185,18 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1650559596
+export SOURCE_DATE_EPOCH=1656971839
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
 export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
-%configure --disable-static --with-clang=/usr/bin/clang \
+%reconfigure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
 --enable-ebpf \
 --enable-ebpf-build \
 --enable-lua
 make  %{?_smp_mflags}
-
 unset PKG_CONFIG_PATH
 pushd ../buildavx2/
 export CFLAGS="$CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
@@ -196,13 +204,14 @@ export CXXFLAGS="$CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
 export FFLAGS="$FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3"
 export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
-%configure --disable-static --with-clang=/usr/bin/clang \
+%reconfigure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
 --enable-ebpf \
 --enable-ebpf-build \
 --enable-lua
 make  %{?_smp_mflags}
 popd
+
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
@@ -213,7 +222,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1650559596
+export SOURCE_DATE_EPOCH=1656971839
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-6.0.5/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c
@@ -378,7 +387,7 @@ popd
 ## install_append content
 install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suricata.service
 ## install_append end
-/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot}/usr/share/clear/optimized-elf/ %{buildroot}/usr/share/clear/filemap/filemap-%{name}
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
@@ -435,6 +444,7 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/include/htp/lzma/7zTypes.h
 /usr/include/htp/lzma/LzmaDec.h
 /usr/include/suricata-plugin.h
+/usr/lib64/glibc-hwcaps/x86-64-v3/libhtp.so
 /usr/lib64/libhtp.so
 /usr/lib64/pkgconfig/htp.pc
 
@@ -448,9 +458,10 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 
 %files lib
 %defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libhtp.so.2
+/usr/lib64/glibc-hwcaps/x86-64-v3/libhtp.so.2.0.0
 /usr/lib64/libhtp.so.2
 /usr/lib64/libhtp.so.2.0.0
-/usr/share/clear/optimized-elf/lib*
 
 %files license
 %defattr(0644,root,root,0755)
