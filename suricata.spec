@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 6.0.6
-Release  : 70
+Release  : 71
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.6.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.6.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.6.tar.gz.sig
