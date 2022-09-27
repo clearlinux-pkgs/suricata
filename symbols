@@ -233,6 +233,8 @@ libhtp.so.2:htp_decode_path_inplace
 libhtp.so.2:htp_extract_quoted_string_as_bstr
 libhtp.so.2:htp_get_version
 libhtp.so.2:htp_gzip_decompressor_create
+libhtp.so.2:htp_gzip_decompressor_decompress
+libhtp.so.2:htp_gzip_decompressor_destroy
 libhtp.so.2:htp_hook_copy
 libhtp.so.2:htp_hook_create
 libhtp.so.2:htp_hook_destroy
