@@ -6,7 +6,7 @@
 #
 Name     : suricata
 Version  : 6.0.8
-Release  : 78
+Release  : 79
 URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz
 Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz
 Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz.sig
@@ -25,6 +25,7 @@ BuildRequires : automake-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
 BuildRequires : doxygen
+BuildRequires : elfutils-dev
 BuildRequires : file-dev
 BuildRequires : gettext-bin
 BuildRequires : grep
@@ -38,7 +39,6 @@ BuildRequires : llvm-dev
 BuildRequires : lz4-dev
 BuildRequires : m4
 BuildRequires : pkg-config-dev
-BuildRequires : pkgconfig(libbpf)
 BuildRequires : pkgconfig(libhs)
 BuildRequires : pkgconfig(libnetfilter_queue)
 BuildRequires : pkgconfig(libpcap)
@@ -47,6 +47,7 @@ BuildRequires : pkgconfig(lua)
 BuildRequires : pkgconfig(luajit)
 BuildRequires : pkgconfig(nspr)
 BuildRequires : pkgconfig(nss)
+BuildRequires : pkgconfig(zlib)
 BuildRequires : pypi(python_dateutil)
 BuildRequires : pypi(pyyaml)
 BuildRequires : pypi(sphinx)
@@ -159,7 +160,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1664329113
+export SOURCE_DATE_EPOCH=1664556835
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -167,8 +168,8 @@ export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %reconfigure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
---enable-ebpf \
---enable-ebpf-build \
+--disable-ebpf \
+--disable-ebpf-build \
 --enable-lua
 make  %{?_smp_mflags}
 unset PKG_CONFIG_PATH
@@ -180,8 +181,8 @@ export FCFLAGS="$FCFLAGS -m64 -march=x86-64-v3"
 export LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3"
 %reconfigure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
---enable-ebpf \
---enable-ebpf-build \
+--disable-ebpf \
+--disable-ebpf-build \
 --enable-lua
 make  %{?_smp_mflags}
 popd
@@ -196,7 +197,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1664329113
+export SOURCE_DATE_EPOCH=1664556835
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-%{version}/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c || :

@@ -1,3 +1,5 @@
 6.0.8
 doxygen
+elfutils-dev
 file-dev
+pkgconfig(zlib)
