@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x2BA9C98CCDF1E93A (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 6.0.8
-Release  : 79
-URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz
-Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.8.tar.gz.sig
+Version  : 6.0.9
+Release  : 80
+URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.9.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.9.tar.gz
+Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.9.tar.gz.sig
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
 License  : 0BSD Apache-2.0 BSD-3-Clause BSL-1.0 GPL-2.0 MIT Unicode-DFS-2016 Unlicense Zlib
@@ -25,7 +25,6 @@ BuildRequires : automake-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : curl-dev
 BuildRequires : doxygen
-BuildRequires : elfutils-dev
 BuildRequires : file-dev
 BuildRequires : gettext-bin
 BuildRequires : grep
@@ -148,11 +147,11 @@ services components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-6.0.8
-cd %{_builddir}/suricata-6.0.8
+%setup -q -n suricata-6.0.9
+cd %{_builddir}/suricata-6.0.9
 %patch1 -p1
 pushd ..
-cp -a suricata-6.0.8 buildavx2
+cp -a suricata-6.0.9 buildavx2
 popd
 
 %build
@@ -160,7 +159,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1664556835
+export SOURCE_DATE_EPOCH=1669832799
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -197,7 +196,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1664556835
+export SOURCE_DATE_EPOCH=1669832799
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-%{version}/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c || :

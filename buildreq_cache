@@ -1,5 +1,4 @@
-6.0.8
+6.0.9
 doxygen
-elfutils-dev
 file-dev
 pkgconfig(zlib)

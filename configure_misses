@@ -16,8 +16,6 @@ Configure miss: libnet.h version 1.1.x
 Configure miss: libnet.h version 1.1.x
 Configure miss: libpcre = 8.35
 Configure miss: libpcre = 8.35
-Configure miss: llc-14.0
-Configure miss: llc-14.0
 Configure miss: mach/mach.h
 Configure miss: mach/mach.h
 Configure miss: pcap/bpf.h
