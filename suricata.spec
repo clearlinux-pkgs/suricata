@@ -5,11 +5,11 @@
 # Source0 file verified with key 0x2BA9C98CCDF1E93A (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 6.0.9
-Release  : 82
-URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.9.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.9.tar.gz
-Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.9.tar.gz.sig
+Version  : 6.0.10
+Release  : 83
+URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.10.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.10.tar.gz
+Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.10.tar.gz.sig
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
 License  : 0BSD Apache-2.0 BSD-3-Clause BSL-1.0 GPL-2.0 MIT Unicode-DFS-2016 Unlicense Zlib
@@ -54,6 +54,9 @@ BuildRequires : pypi(sphinxcontrib_programoutput)
 BuildRequires : pypi-sphinx
 BuildRequires : rustc
 BuildRequires : yaml-dev
+# Suppress stripping binaries
+%define __strip /bin/true
+%define debug_package %{nil}
 Patch1: 0001-doc-remove-sphinx-build-warning-as-error-flag.patch
 
 %description
@@ -147,11 +150,11 @@ services components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-6.0.9
-cd %{_builddir}/suricata-6.0.9
+%setup -q -n suricata-6.0.10
+cd %{_builddir}/suricata-6.0.10
 %patch1 -p1
 pushd ..
-cp -a suricata-6.0.9 buildavx2
+cp -a suricata-6.0.10 buildavx2
 popd
 
 %build
@@ -159,12 +162,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1669832799
+export SOURCE_DATE_EPOCH=1675186358
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$FFLAGS -fno-lto "
-export FFLAGS="$FFLAGS -fno-lto "
-export CXXFLAGS="$CXXFLAGS -fno-lto "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
 %reconfigure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
 --disable-ebpf \
@@ -196,7 +199,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1669832799
+export SOURCE_DATE_EPOCH=1675186358
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-%{version}/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c || :
@@ -285,12 +288,12 @@ cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro-hack/LICENSE-APACHE %
 cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro-hack/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/594599b254cfdf4e8e7a570660d3f7861362acaf || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro2-0.4.30/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro2-0.4.30/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/3b042d3d971924ec0296687efd50dbe08b734976 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro2/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro2/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/3b042d3d971924ec0296687efd50dbe08b734976 || :
+cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro2/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/6e5c4711bcae04967d7f5b5e01cf56ae03bebe7a || :
+cp %{_builddir}/suricata-%{version}/rust/vendor/proc-macro2/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ce3a2603094e799f42ce99c40941544dfcc5c4a5 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/quote-0.6.13/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/quote-0.6.13/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9a2b6b4ad55ec42cf19fc686c74668d3a6303ae7 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/quote/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/quote/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9a2b6b4ad55ec42cf19fc686c74668d3a6303ae7 || :
+cp %{_builddir}/suricata-%{version}/rust/vendor/quote/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ce3a2603094e799f42ce99c40941544dfcc5c4a5 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rand/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rand/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rand/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3 || :
