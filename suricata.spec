@@ -6,17 +6,16 @@
 # Source0 file verified with key 0x2BA9C98CCDF1E93A (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 6.0.11
-Release  : 85
-URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.11.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.11.tar.gz
-Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.11.tar.gz.sig
+Version  : 6.0.13
+Release  : 86
+URL      : https://www.openinfosecfoundation.org/download/suricata-6.0.13.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-6.0.13.tar.gz
+Source1  : https://www.openinfosecfoundation.org/download/suricata-6.0.13.tar.gz.sig
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
 License  : 0BSD Apache-2.0 BSD-3-Clause BSL-1.0 GPL-2.0 MIT Unicode-DFS-2016 Unlicense Zlib
 Requires: suricata-bin = %{version}-%{release}
 Requires: suricata-data = %{version}-%{release}
-Requires: suricata-filemap = %{version}-%{release}
 Requires: suricata-lib = %{version}-%{release}
 Requires: suricata-license = %{version}-%{release}
 Requires: suricata-man = %{version}-%{release}
@@ -60,7 +59,6 @@ Group: Binaries
 Requires: suricata-data = %{version}-%{release}
 Requires: suricata-license = %{version}-%{release}
 Requires: suricata-services = %{version}-%{release}
-Requires: suricata-filemap = %{version}-%{release}
 
 %description bin
 bin components for the suricata package.
@@ -96,20 +94,11 @@ Requires: suricata-man = %{version}-%{release}
 doc components for the suricata package.
 
 
-%package filemap
-Summary: filemap components for the suricata package.
-Group: Default
-
-%description filemap
-filemap components for the suricata package.
-
-
 %package lib
 Summary: lib components for the suricata package.
 Group: Libraries
 Requires: suricata-data = %{version}-%{release}
 Requires: suricata-license = %{version}-%{release}
-Requires: suricata-filemap = %{version}-%{release}
 
 %description lib
 lib components for the suricata package.
@@ -141,11 +130,11 @@ services components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-6.0.11
-cd %{_builddir}/suricata-6.0.11
-%patch1 -p1
+%setup -q -n suricata-6.0.13
+cd %{_builddir}/suricata-6.0.13
+%patch -P 1 -p1
 pushd ..
-cp -a suricata-6.0.11 buildavx2
+cp -a suricata-6.0.13 buildavx2
 popd
 
 %build
@@ -153,12 +142,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1681408500
+export SOURCE_DATE_EPOCH=1686869716
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
-export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz "
+export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export FFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
+export CXXFLAGS="$CXXFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 %reconfigure --disable-static --with-clang=/usr/bin/clang \
 --disable-gccmarch-native \
 --disable-ebpf \
@@ -190,7 +179,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1681408500
+export SOURCE_DATE_EPOCH=1686869716
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-%{version}/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c || :
@@ -215,8 +204,6 @@ cp %{_builddir}/suricata-%{version}/rust/vendor/build_const/LICENSE.txt %{buildr
 cp %{_builddir}/suricata-%{version}/rust/vendor/byteorder/COPYING %{buildroot}/usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/byteorder/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/4c8990add9180fc59efa5b0d8faf643c9709501e || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/byteorder/UNLICENSE %{buildroot}/usr/share/package-licenses/suricata/ff007ce11f3ff7964f1a5b04202c4e95b5c82c85 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/cfg-if-0.1.10/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/cfg-if-0.1.10/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/3b042d3d971924ec0296687efd50dbe08b734976 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/cfg-if/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/cfg-if/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/3b042d3d971924ec0296687efd50dbe08b734976 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/crc/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/dd9b969c81351d17b1585644c99d8fac15f1f523 || :
@@ -248,8 +235,6 @@ cp %{_builddir}/suricata-%{version}/rust/vendor/miniz_oxide/LICENSE %{buildroot}
 cp %{_builddir}/suricata-%{version}/rust/vendor/miniz_oxide/LICENSE-APACHE.md %{buildroot}/usr/share/package-licenses/suricata/598f87f072f66e2269dd6919292b2934dbb20492 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/miniz_oxide/LICENSE-MIT.md %{buildroot}/usr/share/package-licenses/suricata/18d7fe3c54698817feec1f2e04a9d5a0f046a80c || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/miniz_oxide/LICENSE-ZLIB.md %{buildroot}/usr/share/package-licenses/suricata/11f0f1bee61ba6393c3dc7aefee7b92b604ff6c0 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/nodrop/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/nodrop/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/39c13e52bbc0cee5549d36f3829693726fb50a8b || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/nom/LICENSE %{buildroot}/usr/share/package-licenses/suricata/27ea6989d4f34b7b944eb884410a31ae20d11686 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/ntp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/ntp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b || :
@@ -300,16 +285,10 @@ cp %{_builddir}/suricata-%{version}/rust/vendor/rand_hc/LICENSE-MIT %{buildroot}
 cp %{_builddir}/suricata-%{version}/rust/vendor/rand_pcg/COPYRIGHT %{buildroot}/usr/share/package-licenses/suricata/f14afa20edce530124d39cd56312c7781c19b267 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rand_pcg/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/e9b475b5dccf14bd66d72dd12a04db75eaad1a9e || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rand_pcg/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/ac1dc5ec3778e81d0e4041cc84de9f32fd81c663 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/rustc_version/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/rustc_version/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9a2b6b4ad55ec42cf19fc686c74668d3a6303ae7 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rusticata-macros/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/rusticata-macros/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/ryu/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/6e5c4711bcae04967d7f5b5e01cf56ae03bebe7a || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/ryu/LICENSE-BOOST %{buildroot}/usr/share/package-licenses/suricata/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/semver-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/semver-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/da31fe66a3349c85f4ca594c232d82ac4f02a76b || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/semver/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
-cp %{_builddir}/suricata-%{version}/rust/vendor/semver/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/9f3c36d2b7d381d9cf382a00166f3fbd06783636 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/siphasher/COPYING %{buildroot}/usr/share/package-licenses/suricata/89dd598543231b6010a8d57e5cd4f31331fe5364 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/snmp-parser/LICENSE-APACHE %{buildroot}/usr/share/package-licenses/suricata/5798832c31663cedc1618d18544d445da0295229 || :
 cp %{_builddir}/suricata-%{version}/rust/vendor/snmp-parser/LICENSE-MIT %{buildroot}/usr/share/package-licenses/suricata/c097a06b7f5697a25c1e7ec86af49ce8a607de4b || :
@@ -385,6 +364,12 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/lib/suricata/python/suricata/update/compat/ordereddict.py
 /usr/lib/suricata/python/suricata/update/config.py
 /usr/lib/suricata/python/suricata/update/configs/__init__.py
+/usr/lib/suricata/python/suricata/update/configs/disable.conf
+/usr/lib/suricata/python/suricata/update/configs/drop.conf
+/usr/lib/suricata/python/suricata/update/configs/enable.conf
+/usr/lib/suricata/python/suricata/update/configs/modify.conf
+/usr/lib/suricata/python/suricata/update/configs/threshold.in
+/usr/lib/suricata/python/suricata/update/configs/update.yaml
 /usr/lib/suricata/python/suricata/update/data/__init__.py
 /usr/lib/suricata/python/suricata/update/data/index.py
 /usr/lib/suricata/python/suricata/update/data/update.py
@@ -407,11 +392,11 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/suricata
 /usr/bin/suricata
 /usr/bin/suricata-update
 /usr/bin/suricatactl
 /usr/bin/suricatasc
-/usr/share/clear/optimized-elf/bin*
 
 %files data
 %defattr(-,root,root,-)
@@ -458,7 +443,6 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/include/htp/lzma/7zTypes.h
 /usr/include/htp/lzma/LzmaDec.h
 /usr/include/suricata-plugin.h
-/usr/lib64/glibc-hwcaps/x86-64-v3/libhtp.so
 /usr/lib64/libhtp.so
 /usr/lib64/pkgconfig/htp.pc
 
@@ -466,14 +450,9 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 %defattr(0644,root,root,0755)
 /usr/share/doc/suricata/*
 
-%files filemap
-%defattr(-,root,root,-)
-/usr/share/clear/filemap/filemap-suricata
-
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libhtp.so.2
-/usr/lib64/glibc-hwcaps/x86-64-v3/libhtp.so.2.0.0
+/V3/usr/lib64/libhtp.so.2.0.0
 /usr/lib64/libhtp.so.2
 /usr/lib64/libhtp.so.2.0.0
 
@@ -526,7 +505,6 @@ install -m 0644 -D etc/suricata.service %{buildroot}/usr/lib/systemd/system/suri
 /usr/share/package-licenses/suricata/ce3a2603094e799f42ce99c40941544dfcc5c4a5
 /usr/share/package-licenses/suricata/cfcb552ef0afbe7ccb4128891c0de00685988a4b
 /usr/share/package-licenses/suricata/d74ad13f1402c35008f22bc588a6b8199ed164d3
-/usr/share/package-licenses/suricata/da31fe66a3349c85f4ca594c232d82ac4f02a76b
 /usr/share/package-licenses/suricata/dd445710e6e4caccc4f8a587a130eaeebe83f6f6
 /usr/share/package-licenses/suricata/dd9b969c81351d17b1585644c99d8fac15f1f523
 /usr/share/package-licenses/suricata/e1c86f32641f01a5b85d6e9b20138e8470b883fc
