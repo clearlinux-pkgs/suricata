@@ -280,6 +280,7 @@ libhtp.so.2:htp_normalize_parsed_uri
 libhtp.so.2:htp_normalize_uri_path_inplace
 libhtp.so.2:htp_parse_authorization
 libhtp.so.2:htp_parse_authorization_basic
+libhtp.so.2:htp_parse_authorization_bearer
 libhtp.so.2:htp_parse_authorization_digest
 libhtp.so.2:htp_parse_chunked_length
 libhtp.so.2:htp_parse_content_length

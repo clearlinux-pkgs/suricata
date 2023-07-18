@@ -1,4 +1,4 @@
-6.0.13
+7.0.0
 doxygen
 file-dev
-pkgconfig(zlib)
+systemd-dev

@@ -10,3 +10,4 @@ llvm-dev
 lz4-dev
 rustc
 yaml-dev
+pcre2-dev
