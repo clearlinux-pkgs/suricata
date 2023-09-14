@@ -6,11 +6,11 @@
 # Source0 file verified with key 0x2BA9C98CCDF1E93A (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 7.0.0
-Release  : 90
-URL      : https://www.openinfosecfoundation.org/download/suricata-7.0.0.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-7.0.0.tar.gz
-Source1  : https://www.openinfosecfoundation.org/download/suricata-7.0.0.tar.gz.sig
+Version  : 7.0.1
+Release  : 91
+URL      : https://www.openinfosecfoundation.org/download/suricata-7.0.1.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-7.0.1.tar.gz
+Source1  : https://www.openinfosecfoundation.org/download/suricata-7.0.1.tar.gz.sig
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
 License  : 0BSD Apache-2.0 BSD-3-Clause GPL-2.0 ICU MIT Unicode-DFS-2016 Unlicense Zlib
@@ -128,10 +128,10 @@ services components for the suricata package.
 
 
 %prep
-%setup -q -n suricata-7.0.0
-cd %{_builddir}/suricata-7.0.0
+%setup -q -n suricata-7.0.1
+cd %{_builddir}/suricata-7.0.1
 pushd ..
-cp -a suricata-7.0.0 buildavx2
+cp -a suricata-7.0.1 buildavx2
 popd
 
 %build
@@ -139,7 +139,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1689701361
+export SOURCE_DATE_EPOCH=1694710169
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 export FCFLAGS="$FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -176,7 +176,7 @@ cd ../buildavx2;
 make %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1689701361
+export SOURCE_DATE_EPOCH=1694710169
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-%{version}/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c || :
