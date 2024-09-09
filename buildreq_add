@@ -2,7 +2,7 @@
 # picked up automatically. One name per line, no whitespace.
 pypi-sphinx
 curl-dev
-hyperscan-dev
+vectorscan-dev
 jansson-dev
 libcap-ng-dev
 llvm
