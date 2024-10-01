@@ -149,6 +149,7 @@ libhtp.so.2:htp_config_set_nul_encoded_terminates
 libhtp.so.2:htp_config_set_nul_encoded_unwanted
 libhtp.so.2:htp_config_set_nul_raw_terminates
 libhtp.so.2:htp_config_set_nul_raw_unwanted
+libhtp.so.2:htp_config_set_number_headers_limit
 libhtp.so.2:htp_config_set_parse_request_auth
 libhtp.so.2:htp_config_set_parse_request_cookies
 libhtp.so.2:htp_config_set_path_separators_compress
