@@ -8,11 +8,11 @@
 # Source0 file verified with key 0x2BA9C98CCDF1E93A (releases@openinfosecfoundation.org)
 #
 Name     : suricata
-Version  : 7.0.9
-Release  : 111
-URL      : https://www.openinfosecfoundation.org/download/suricata-7.0.9.tar.gz
-Source0  : https://www.openinfosecfoundation.org/download/suricata-7.0.9.tar.gz
-Source1  : https://www.openinfosecfoundation.org/download/suricata-7.0.9.tar.gz.sig
+Version  : 7.0.10
+Release  : 112
+URL      : https://www.openinfosecfoundation.org/download/suricata-7.0.10.tar.gz
+Source0  : https://www.openinfosecfoundation.org/download/suricata-7.0.10.tar.gz
+Source1  : https://www.openinfosecfoundation.org/download/suricata-7.0.10.tar.gz.sig
 Source2  : 2BA9C98CCDF1E93A.pkey
 Summary  : A security-aware HTTP parser, designed for use in IDS/IPS and WAF products.
 Group    : Development/Tools
@@ -138,10 +138,10 @@ chmod 700 .gnupg
 gpg --homedir .gnupg --import %{SOURCE2}
 gpg --homedir .gnupg --status-fd 1 --verify %{SOURCE1} %{SOURCE0} > gpg.status
 grep -E '^\[GNUPG:\] (GOODSIG|EXPKEYSIG) 2BA9C98CCDF1E93A' gpg.status
-%setup -q -n suricata-7.0.9
-cd %{_builddir}/suricata-7.0.9
+%setup -q -n suricata-7.0.10
+cd %{_builddir}/suricata-7.0.10
 pushd ..
-cp -a suricata-7.0.9 buildavx2
+cp -a suricata-7.0.10 buildavx2
 popd
 
 %build
@@ -149,7 +149,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1742432258
+export SOURCE_DATE_EPOCH=1742912154
 export GCC_IGNORE_WERROR=1
 CLEAR_INTERMEDIATE_CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
 CLEAR_INTERMEDIATE_FCFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -fdebug-types-section -femit-struct-debug-baseonly -fno-lto -g1 -gno-column-info -gno-variable-location-views -gz=zstd "
@@ -205,7 +205,7 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1742432258
+export SOURCE_DATE_EPOCH=1742912154
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/suricata
 cp %{_builddir}/suricata-%{version}/COPYING %{buildroot}/usr/share/package-licenses/suricata/4cc77b90af91e615a64ae04893fdffa7939db84c || :
